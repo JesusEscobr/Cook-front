@@ -105,7 +105,7 @@
 
 <script>
 
-  const API = 'https://cook-back-xwlk.onrender.com/api/users'
+  const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
 
@@ -123,17 +123,17 @@
   }
 
   function loadSession() {
-    const saved = localStorage.getItem('user')
+    const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
-    const savedEmail = localStorage.getItem('email')
+    const savedEmail = localStorage.getItem('cookio_email')
     if (savedEmail) currentUserEmail = savedEmail
   }
 
   function clearSession() {
     currentUser = null
     currentUserEmail = ''
-    localStorage.removeItem('user')
-    localStorage.removeItem('email')
+    localStorage.removeItem('cookio_user')
+    localStorage.removeItem('cookio_email')
   }
 
   function renderNavbar() {
