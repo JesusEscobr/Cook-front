@@ -88,13 +88,10 @@
   <span class="t-msg" id="toast-msg"></span>
 </div>
 <script>
-  // ── Config ────────────────────────────────────────────────
-  // ⚠ Cambia 'TU-PROYECTO' por el nombre de tu servicio en Render
   const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
- 
-  // ── Utilidades ────────────────────────────────────────────
+
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
     const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' }
@@ -127,8 +124,7 @@
   function escHtml(str) {
     return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')
   }
- 
-  // ── Sesión ────────────────────────────────────────────────
+
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
@@ -142,8 +138,6 @@
     localStorage.removeItem('cookio_user')
     localStorage.removeItem('cookio_email')
   }
- 
-  // ── Navbar ────────────────────────────────────────────────
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
     if (!navArea) return
@@ -169,8 +163,6 @@
     toast('Sesión cerrada.', 'info')
     setTimeout(() => { renderNavbar(); loadReviews() }, 400)
   }
- 
-  // ── Reseñas ───────────────────────────────────────────────
   async function loadReviews() {
     const grid = document.getElementById('reviews-grid')
     grid.innerHTML = '<div class="reviews-loading"><span class="spinner"></span>Cargando reseñas…</div>'
@@ -216,8 +208,6 @@
       </div>
     </div>`
   }
- 
-  // ── Editar ────────────────────────────────────────────────
   function openEdit(id, titulo, calificacion, contenido) {
     document.getElementById('edit-id').value           = id
     document.getElementById('edit-titulo').value       = titulo
@@ -245,8 +235,6 @@
       loadReviews()
     } catch (e) { toast(e.message, 'error') }
   }
- 
-  // ── Eliminar ──────────────────────────────────────────────
   async function deleteReview(id) {
     if (!confirm('¿Eliminar esta reseña?')) return
     try {
@@ -259,8 +247,6 @@
       loadReviews()
     } catch (e) { toast(e.message, 'error') }
   }
- 
-  // ── Init ──────────────────────────────────────────────────
   loadSession()
   renderNavbar()
   loadReviews()

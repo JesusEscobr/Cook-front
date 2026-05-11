@@ -95,13 +95,11 @@
   <span class="t-msg" id="toast-msg"></span>
 </div>
 <script>
-  // ── Config ────────────────────────────────────────────────
-  // ⚠ Cambia 'TU-PROYECTO' por el nombre de tu servicio en Render
+
   const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
- 
-  // ── Utilidades ────────────────────────────────────────────
+
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
     const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' }
@@ -114,8 +112,6 @@
   function initials(email) {
     return email ? email.substring(0, 2).toUpperCase() : '??'
   }
- 
-  // ── Sesión ────────────────────────────────────────────────
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
@@ -129,8 +125,6 @@
     localStorage.removeItem('cookio_user')
     localStorage.removeItem('cookio_email')
   }
- 
-  // ── Navbar ────────────────────────────────────────────────
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
     if (!navArea) return
@@ -159,8 +153,6 @@
       applyFormState()
     }, 400)
   }
- 
-  // ── Estado del formulario ─────────────────────────────────
   function applyFormState() {
     const addSection = document.getElementById('add-review-section')
     const lockMsg    = document.getElementById('lock-msg')
@@ -179,8 +171,6 @@
       promptBox.style.display = 'block'
     }
   }
- 
-  // ── Publicar reseña ───────────────────────────────────────
   document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('btn-submit-review').addEventListener('click', async () => {
       if (!currentUser) return toast('Inicia sesión primero.', 'error')

@@ -25,17 +25,13 @@
       <a href="resenas.html">Reseñas</a>
       <a href="agregar.html">Agregar reseña</a>
     </div>
-    <div class="nav-auth-area" id="nav-auth-area"><!-- JS --></div>
+    <div class="nav-auth-area" id="nav-auth-area"></div>
   </div>
 </nav>
-
-<!-- PAGE HERO -->
 <div class="page-hero" id="page-hero">
   <h1 id="page-title">Mi <em>Perfil</em></h1>
   <p id="page-subtitle">Gestiona tu cuenta y tus reseñas.</p>
 </div>
-
-<!-- Panel NO logueado -->
 <div class="login-section" id="auth-logged-out">
   <div class="login-card">
     <div class="login-icon"><i class="fa-solid fa-utensils"></i></div>
@@ -44,8 +40,6 @@
       <button class="auth-tab active" id="tab-login" onclick="switchTab('login')">Iniciar sesión</button>
       <button class="auth-tab" id="tab-register" onclick="switchTab('register')">Registrarse</button>
     </div>
-
-    <!-- LOGIN -->
     <div id="panel-login">
       <div class="login-form">
         <div class="form-group">
@@ -61,8 +55,6 @@
         </button>
       </div>
     </div>
-
-    <!-- REGISTER -->
     <div id="panel-register" style="display:none">
       <div class="login-form">
         <div class="form-group">
@@ -88,8 +80,6 @@
     </div>
   </div>
 </div>
-
-<!-- Panel LOGUEADO -->
 <div class="login-section" id="auth-logged-in">
   <div class="user-panel">
     <div class="big-avatar" id="user-avatar-big">?</div>
@@ -105,27 +95,19 @@
     </div>
   </div>
 </div>
-
-<!-- FOOTER -->
 <footer class="footer" style="margin-top:80px;">
   <span class="footer-brand">Cook<span style="color:var(--gold)">.</span>io</span>
   <span class="footer-text">© 2025 Cook.io — Todos los derechos reservados</span>
 </footer>
-
-<!-- TOAST -->
 <div id="toast">
   <span class="t-icon"><i class="fa-solid fa-circle-check"></i></span>
   <span class="t-msg" id="toast-msg"></span>
 </div>
 
 <script>
-  // ── Config ────────────────────────────────────────────────
-  // ⚠ Cambia 'TU-PROYECTO' por el nombre de tu servicio en Render
   const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
- 
-  // ── Utilidades ────────────────────────────────────────────
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
     const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' }
@@ -138,8 +120,7 @@
   function initials(email) {
     return email ? email.substring(0, 2).toUpperCase() : '??'
   }
- 
-  // ── Sesión ────────────────────────────────────────────────
+
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
@@ -160,8 +141,7 @@
     localStorage.removeItem('cookio_user')
     localStorage.removeItem('cookio_email')
   }
- 
-  // ── Navbar ────────────────────────────────────────────────
+
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
     if (!navArea) return
@@ -187,8 +167,7 @@
     toast('Sesión cerrada.', 'info')
     setTimeout(() => { renderNavbar(); renderAuthSection() }, 400)
   }
- 
-  // ── Auth section ──────────────────────────────────────────
+
   function renderAuthSection() {
     const loggedOut = document.getElementById('auth-logged-out')
     const loggedIn  = document.getElementById('auth-logged-in')
@@ -210,16 +189,13 @@
       pageSub.textContent = 'Accede a tu cuenta o créate una nueva.'
     }
   }
- 
-  // ── Tabs ───────────────────────────────────────────────────
+
   function switchTab(tab) {
     document.getElementById('panel-login').style.display    = tab === 'login'    ? '' : 'none'
     document.getElementById('panel-register').style.display = tab === 'register' ? '' : 'none'
     document.getElementById('tab-login').classList.toggle('active',    tab === 'login')
     document.getElementById('tab-register').classList.toggle('active', tab === 'register')
   }
- 
-  // ── Login ─────────────────────────────────────────────────
   async function handleLogin() {
     const email    = document.getElementById('login-email').value.trim()
     const password = document.getElementById('login-password').value
@@ -237,8 +213,7 @@
       renderAuthSection()
     } catch (e) { toast(e.message, 'error') }
   }
- 
-  // ── Register ──────────────────────────────────────────────
+
   async function handleRegister() {
     const nombre    = document.getElementById('reg-nombre').value.trim()
     const email     = document.getElementById('reg-email').value.trim()
@@ -257,16 +232,13 @@
       document.getElementById('login-email').value = email
     } catch (e) { toast(e.message, 'error') }
   }
- 
-  // ── Logout (esta página) ──────────────────────────────────
   function handleLogoutPage() {
     clearSession()
     toast('Sesión cerrada.', 'info')
     renderNavbar()
     renderAuthSection()
   }
- 
-  // ── Eliminar cuenta ───────────────────────────────────────
+
   async function handleDeleteAccount() {
     if (!confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) return
     try {
@@ -280,8 +252,6 @@
       renderAuthSection()
     } catch (e) { toast(e.message, 'error') }
   }
- 
-  // ── Init ──────────────────────────────────────────────────
   loadSession()
   renderNavbar()
   renderAuthSection()
