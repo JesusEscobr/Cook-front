@@ -585,3 +585,51 @@ body {
 .delay-1 { animation-delay: 0.1s; }
 .delay-2 { animation-delay: 0.2s; }
 .delay-3 { animation-delay: 0.3s; }
+
+/* ── RESPONSIVE ───────────────────────────────────────────── */
+@media (max-width: 768px) {
+
+  /* Navbar: ocultar links, compactar */
+  .nav-links          { display: none; }
+  .navbar             { padding: 0 1.2rem; }
+  .navbar-brand       { font-size: 1.4rem; }
+
+  /* Hero */
+  .header             { height: 100svh; padding-bottom: 60px; }
+  .hero-content       { padding: 0 1.5rem; }
+  .hero-sub           { font-size: 0.95rem; }
+  #hero-cta-area      { display: flex; flex-direction: column; gap: 12px; align-items: flex-start; }
+  #hero-cta-area .hero-cta { margin-left: 0 !important; }
+
+  /* Page heroes y secciones */
+  .page-hero          { padding: 40px 1.5rem 0; }
+  .page-hero h1       { font-size: 2rem; }
+  .section-header     { padding: 50px 1.5rem 30px; }
+
+  /* Carousel */
+  .carousel-section   { padding: 0 1.5rem 40px; }
+  .carousel-item      { height: 380px; }
+  .carousel-caption   { left: 20px; bottom: 24px; max-width: 85%; }
+  .carousel-caption h5{ font-size: 1.3rem; }
+  .carousel-caption p { font-size: 0.82rem; }
+
+  /* Reseñas: 1 columna */
+  .reviews-section    { padding: 0 1.5rem 40px; }
+  .review-grid        { grid-template-columns: 1fr; }
+
+  /* Formulario agregar */
+  .add-review-section { padding: 0 1.5rem 40px; }
+  .add-review-card    { padding: 28px 20px; }
+  .form-row           { grid-template-columns: 1fr; }
+
+  /* Login / perfil */
+  .login-section      { padding: 0 1.5rem 60px; }
+  .login-card,
+  .user-panel         { padding: 32px 20px; }
+
+  /* Toast más pequeño */
+  #toast              { left: 16px; right: 16px; min-width: unset; max-width: unset; bottom: 16px; }
+
+  /* Footer apilado */
+  .footer             { flex-direction: column; gap: 6px; text-align: center; padding: 24px 1.5rem; margin-top: 40px; }
+}
