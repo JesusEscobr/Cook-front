@@ -120,10 +120,11 @@
 
 <script>
   // ── Config ────────────────────────────────────────────────
-  const API = 'https://cook-back-xwlk.onrender.com/api/users'
+  // ⚠ Cambia 'TU-PROYECTO' por el nombre de tu servicio en Render
+  const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
-
+ 
   // ── Utilidades ────────────────────────────────────────────
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
@@ -133,11 +134,11 @@
     el.className = `show ${type}`
     setTimeout(() => el.className = '', 3500)
   }
-
+ 
   function initials(email) {
     return email ? email.substring(0, 2).toUpperCase() : '??'
   }
-
+ 
   // ── Sesión ────────────────────────────────────────────────
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
@@ -145,21 +146,21 @@
     const savedEmail = localStorage.getItem('cookio_email')
     if (savedEmail) currentUserEmail = savedEmail
   }
-
+ 
   function saveSession(user, email) {
     currentUser = user
     currentUserEmail = email
     localStorage.setItem('cookio_user', JSON.stringify(user))
     localStorage.setItem('cookio_email', email)
   }
-
+ 
   function clearSession() {
     currentUser = null
     currentUserEmail = ''
     localStorage.removeItem('cookio_user')
     localStorage.removeItem('cookio_email')
   }
-
+ 
   // ── Navbar ────────────────────────────────────────────────
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
@@ -180,20 +181,20 @@
         <a class="btn-nav btn-nav-gold"    href="perfil.html">Registrarse</a>`
     }
   }
-
+ 
   function handleLogout() {
     clearSession()
     toast('Sesión cerrada.', 'info')
     setTimeout(() => { renderNavbar(); renderAuthSection() }, 400)
   }
-
+ 
   // ── Auth section ──────────────────────────────────────────
   function renderAuthSection() {
     const loggedOut = document.getElementById('auth-logged-out')
     const loggedIn  = document.getElementById('auth-logged-in')
     const pageTitle = document.getElementById('page-title')
     const pageSub   = document.getElementById('page-subtitle')
-
+ 
     if (currentUser) {
       loggedOut.style.display = 'none'
       loggedIn.style.display  = 'block'
@@ -209,12 +210,16 @@
       pageSub.textContent = 'Accede a tu cuenta o créate una nueva.'
     }
   }
+ 
+  // ── Tabs ───────────────────────────────────────────────────
   function switchTab(tab) {
     document.getElementById('panel-login').style.display    = tab === 'login'    ? '' : 'none'
     document.getElementById('panel-register').style.display = tab === 'register' ? '' : 'none'
     document.getElementById('tab-login').classList.toggle('active',    tab === 'login')
     document.getElementById('tab-register').classList.toggle('active', tab === 'register')
   }
+ 
+  // ── Login ─────────────────────────────────────────────────
   async function handleLogin() {
     const email    = document.getElementById('login-email').value.trim()
     const password = document.getElementById('login-password').value
@@ -232,6 +237,8 @@
       renderAuthSection()
     } catch (e) { toast(e.message, 'error') }
   }
+ 
+  // ── Register ──────────────────────────────────────────────
   async function handleRegister() {
     const nombre    = document.getElementById('reg-nombre').value.trim()
     const email     = document.getElementById('reg-email').value.trim()
@@ -250,14 +257,16 @@
       document.getElementById('login-email').value = email
     } catch (e) { toast(e.message, 'error') }
   }
-
+ 
+  // ── Logout (esta página) ──────────────────────────────────
   function handleLogoutPage() {
     clearSession()
     toast('Sesión cerrada.', 'info')
     renderNavbar()
     renderAuthSection()
   }
-
+ 
+  // ── Eliminar cuenta ───────────────────────────────────────
   async function handleDeleteAccount() {
     if (!confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) return
     try {
@@ -271,7 +280,8 @@
       renderAuthSection()
     } catch (e) { toast(e.message, 'error') }
   }
-
+ 
+  // ── Init ──────────────────────────────────────────────────
   loadSession()
   renderNavbar()
   renderAuthSection()

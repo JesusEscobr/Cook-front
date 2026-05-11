@@ -87,12 +87,14 @@
   <span class="t-icon"><i class="fa-solid fa-circle-check"></i></span>
   <span class="t-msg" id="toast-msg"></span>
 </div>
-
 <script>
-  const API = 'https://cook-back-xwlk.onrender.com/api/resenas'
+  // ── Config ────────────────────────────────────────────────
+  // ⚠ Cambia 'TU-PROYECTO' por el nombre de tu servicio en Render
+  const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
-
+ 
+  // ── Utilidades ────────────────────────────────────────────
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
     const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' }
@@ -101,11 +103,11 @@
     el.className = `show ${type}`
     setTimeout(() => el.className = '', 3500)
   }
-
+ 
   function starsHtml(n) {
     return '★'.repeat(n) + '☆'.repeat(5 - n)
   }
-
+ 
   function timeAgo(dateStr) {
     const diff = Date.now() - new Date(dateStr)
     const m = Math.floor(diff / 60000)
@@ -117,27 +119,31 @@
     if (d < 30) return `Hace ${d} días`
     return new Date(dateStr).toLocaleDateString('es-MX', { day: 'numeric', month: 'short', year: 'numeric' })
   }
-
+ 
   function initials(email) {
     return email ? email.substring(0, 2).toUpperCase() : '??'
   }
-
+ 
   function escHtml(str) {
     return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')
   }
+ 
+  // ── Sesión ────────────────────────────────────────────────
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
     const savedEmail = localStorage.getItem('cookio_email')
     if (savedEmail) currentUserEmail = savedEmail
   }
-
+ 
   function clearSession() {
     currentUser = null
     currentUserEmail = ''
     localStorage.removeItem('cookio_user')
     localStorage.removeItem('cookio_email')
   }
+ 
+  // ── Navbar ────────────────────────────────────────────────
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
     if (!navArea) return
@@ -157,12 +163,14 @@
         <a class="btn-nav btn-nav-gold"    href="perfil.html">Registrarse</a>`
     }
   }
-
+ 
   function handleLogout() {
     clearSession()
     toast('Sesión cerrada.', 'info')
     setTimeout(() => { renderNavbar(); loadReviews() }, 400)
   }
+ 
+  // ── Reseñas ───────────────────────────────────────────────
   async function loadReviews() {
     const grid = document.getElementById('reviews-grid')
     grid.innerHTML = '<div class="reviews-loading"><span class="spinner"></span>Cargando reseñas…</div>'
@@ -179,7 +187,7 @@
       grid.innerHTML = `<div class="reviews-empty"><i class="fa-solid fa-triangle-exclamation"></i>&nbsp; No se pudieron cargar las reseñas.</div>`
     }
   }
-
+ 
   function reviewCardHtml(r) {
     const isOwn = currentUser && r.user && r.user._id === currentUser._id
     const stars  = starsHtml(r.calificacion)
@@ -208,6 +216,8 @@
       </div>
     </div>`
   }
+ 
+  // ── Editar ────────────────────────────────────────────────
   function openEdit(id, titulo, calificacion, contenido) {
     document.getElementById('edit-id').value           = id
     document.getElementById('edit-titulo').value       = titulo
@@ -215,7 +225,7 @@
     document.getElementById('edit-contenido').value    = contenido
     new bootstrap.Modal(document.getElementById('editModal')).show()
   }
-
+ 
   async function handleEditSave() {
     const id           = document.getElementById('edit-id').value
     const titulo       = document.getElementById('edit-titulo').value.trim()
@@ -235,6 +245,8 @@
       loadReviews()
     } catch (e) { toast(e.message, 'error') }
   }
+ 
+  // ── Eliminar ──────────────────────────────────────────────
   async function deleteReview(id) {
     if (!confirm('¿Eliminar esta reseña?')) return
     try {
@@ -247,6 +259,8 @@
       loadReviews()
     } catch (e) { toast(e.message, 'error') }
   }
+ 
+  // ── Init ──────────────────────────────────────────────────
   loadSession()
   renderNavbar()
   loadReviews()

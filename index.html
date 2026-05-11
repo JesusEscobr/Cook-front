@@ -104,11 +104,9 @@
 </div>
 
 <script>
-
   const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
-
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
     const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' }
@@ -117,25 +115,23 @@
     el.className = `show ${type}`
     setTimeout(() => el.className = '', 3500)
   }
-
+ 
   function initials(email) {
     return email ? email.substring(0, 2).toUpperCase() : '??'
   }
-
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
     const savedEmail = localStorage.getItem('cookio_email')
     if (savedEmail) currentUserEmail = savedEmail
   }
-
+ 
   function clearSession() {
     currentUser = null
     currentUserEmail = ''
     localStorage.removeItem('cookio_user')
     localStorage.removeItem('cookio_email')
   }
-
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
     if (!navArea) return
@@ -155,7 +151,7 @@
         <a class="btn-nav btn-nav-gold"    href="perfil.html">Registrarse</a>`
     }
   }
-
+ 
   function handleLogout() {
     clearSession()
     toast('Sesión cerrada.', 'info')
