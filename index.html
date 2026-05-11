@@ -13,7 +13,6 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="container-fluid d-flex align-items-center">
     <a class="navbar-brand" href="index.html">
@@ -25,11 +24,10 @@
       <a href="resenas.html">Reseñas</a>
       <a href="agregar.html">Agregar reseña</a>
     </div>
-    <div class="nav-auth-area" id="nav-auth-area"><!-- JS --></div>
+    <div class="nav-auth-area" id="nav-auth-area"></div>
   </div>
 </nav>
 
-<!-- HERO -->
 <div class="header">
   <div class="hero-content">
     <div class="hero-tag animate">
@@ -38,12 +36,9 @@
     <h1 class="hero-title animate delay-1">
       Sabores que<br><em>cuentan historias</em>
     </h1>
-    <p class="hero-sub animate delay-2">Reseñas auténticas de restaurantes, escritas por quienes más importan: los comensales.</p>
-    <div id="hero-cta-area" class="animate delay-3"><!-- JS --></div>
+    <div id="hero-cta-area" class="animate delay-3"></div>
   </div>
 </div>
-
-<!-- TRENDING -->
 <div class="section-header">
   <div class="line"></div>
   <div class="section-label">
@@ -92,33 +87,28 @@
     </button>
   </div>
 </div>
-
-<!-- CTA a reseñas -->
 <div style="text-align:center; padding: 0 3rem 80px;">
   <a href="resenas.html" class="hero-cta" style="display:inline-flex;">
     <i class="fa-solid fa-star"></i>&nbsp; Ver todas las reseñas
   </a>
 </div>
 
-<!-- FOOTER -->
 <footer class="footer">
   <span class="footer-brand">Cook<span style="color:var(--gold)">.</span>io</span>
   <span class="footer-text">© 2025 Cook.io — Todos los derechos reservados</span>
 </footer>
 
-<!-- TOAST -->
 <div id="toast">
   <span class="t-icon"><i class="fa-solid fa-circle-check"></i></span>
   <span class="t-msg" id="toast-msg"></span>
 </div>
 
 <script>
-  // ── Config ────────────────────────────────────────────────
-  const API = 'https://TU-PROYECTO.onrender.com/api'
+
+  const API = 'https://cook-back-xwlk.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
 
-  // ── Utilidades ────────────────────────────────────────────
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
     const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' }
@@ -132,7 +122,6 @@
     return email ? email.substring(0, 2).toUpperCase() : '??'
   }
 
-  // ── Sesión ────────────────────────────────────────────────
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
@@ -147,7 +136,6 @@
     localStorage.removeItem('cookio_email')
   }
 
-  // ── Navbar ────────────────────────────────────────────────
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
     if (!navArea) return
@@ -177,7 +165,6 @@
     }, 400)
   }
 
-  // ── Hero CTA dinámico ─────────────────────────────────────
   function renderHeroCta() {
     const area = document.getElementById('hero-cta-area')
     if (!area) return
@@ -197,7 +184,6 @@
     }
   }
 
-  // ── Init ──────────────────────────────────────────────────
   loadSession()
   renderNavbar()
   renderHeroCta()

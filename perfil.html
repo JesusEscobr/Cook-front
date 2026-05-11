@@ -209,16 +209,12 @@
       pageSub.textContent = 'Accede a tu cuenta o créate una nueva.'
     }
   }
-
-  // ── Tabs ───────────────────────────────────────────────────
   function switchTab(tab) {
     document.getElementById('panel-login').style.display    = tab === 'login'    ? '' : 'none'
     document.getElementById('panel-register').style.display = tab === 'register' ? '' : 'none'
     document.getElementById('tab-login').classList.toggle('active',    tab === 'login')
     document.getElementById('tab-register').classList.toggle('active', tab === 'register')
   }
-
-  // ── Login ─────────────────────────────────────────────────
   async function handleLogin() {
     const email    = document.getElementById('login-email').value.trim()
     const password = document.getElementById('login-password').value
@@ -236,8 +232,6 @@
       renderAuthSection()
     } catch (e) { toast(e.message, 'error') }
   }
-
-  // ── Register ──────────────────────────────────────────────
   async function handleRegister() {
     const nombre    = document.getElementById('reg-nombre').value.trim()
     const email     = document.getElementById('reg-email').value.trim()
@@ -257,7 +251,6 @@
     } catch (e) { toast(e.message, 'error') }
   }
 
-  // ── Logout (esta página) ──────────────────────────────────
   function handleLogoutPage() {
     clearSession()
     toast('Sesión cerrada.', 'info')
@@ -265,7 +258,6 @@
     renderAuthSection()
   }
 
-  // ── Eliminar cuenta ───────────────────────────────────────
   async function handleDeleteAccount() {
     if (!confirm('¿Seguro que quieres eliminar tu cuenta? Esta acción no se puede deshacer.')) return
     try {
@@ -280,7 +272,6 @@
     } catch (e) { toast(e.message, 'error') }
   }
 
-  // ── Init ──────────────────────────────────────────────────
   loadSession()
   renderNavbar()
   renderAuthSection()

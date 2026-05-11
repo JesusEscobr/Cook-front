@@ -13,7 +13,6 @@
 </head>
 <body>
 
-<!-- NAVBAR -->
 <nav class="navbar">
   <div class="container-fluid d-flex align-items-center">
     <a class="navbar-brand" href="index.html">
@@ -25,11 +24,10 @@
       <a href="resenas.html" class="active">Reseñas</a>
       <a href="agregar.html">Agregar reseña</a>
     </div>
-    <div class="nav-auth-area" id="nav-auth-area"><!-- JS --></div>
+    <div class="nav-auth-area" id="nav-auth-area"></div>
   </div>
 </nav>
 
-<!-- PAGE HERO -->
 <div class="page-hero">
   <h1>Reseñas <em>Destacadas</em></h1>
   <p>Lo que opinan los comensales de los mejores restaurantes.</p>
@@ -37,8 +35,6 @@
     <i class="fa-solid fa-pen-to-square"></i> Escribir una reseña
   </a>
 </div>
-
-<!-- RESEÑAS -->
 <div class="section-header">
   <div class="line"></div>
   <div class="section-label">
@@ -54,14 +50,10 @@
     <div class="reviews-loading"><span class="spinner"></span>Cargando reseñas…</div>
   </div>
 </div>
-
-<!-- FOOTER -->
 <footer class="footer">
   <span class="footer-brand">Cook<span style="color:var(--gold)">.</span>io</span>
   <span class="footer-text">© 2025 Cook.io — Todos los derechos reservados</span>
 </footer>
-
-<!-- MODAL EDITAR RESEÑA -->
 <div class="modal fade modal-dark" id="editModal" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content p-2">
@@ -91,20 +83,16 @@
     </div>
   </div>
 </div>
-
-<!-- TOAST -->
 <div id="toast">
   <span class="t-icon"><i class="fa-solid fa-circle-check"></i></span>
   <span class="t-msg" id="toast-msg"></span>
 </div>
 
 <script>
-  // ── Config ────────────────────────────────────────────────
   const API = 'https://TU-PROYECTO.onrender.com/api'
   let currentUser = null
   let currentUserEmail = ''
 
-  // ── Utilidades ────────────────────────────────────────────
   function toast(msg, type = 'info') {
     const el = document.getElementById('toast')
     const icons = { success: 'fa-circle-check', error: 'fa-circle-xmark', info: 'fa-circle-info' }
@@ -137,8 +125,6 @@
   function escHtml(str) {
     return String(str ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;')
   }
-
-  // ── Sesión ────────────────────────────────────────────────
   function loadSession() {
     const saved = localStorage.getItem('cookio_user')
     if (saved) { try { currentUser = JSON.parse(saved) } catch {} }
@@ -152,8 +138,6 @@
     localStorage.removeItem('cookio_user')
     localStorage.removeItem('cookio_email')
   }
-
-  // ── Navbar ────────────────────────────────────────────────
   function renderNavbar() {
     const navArea = document.getElementById('nav-auth-area')
     if (!navArea) return
@@ -179,8 +163,6 @@
     toast('Sesión cerrada.', 'info')
     setTimeout(() => { renderNavbar(); loadReviews() }, 400)
   }
-
-  // ── Reseñas ───────────────────────────────────────────────
   async function loadReviews() {
     const grid = document.getElementById('reviews-grid')
     grid.innerHTML = '<div class="reviews-loading"><span class="spinner"></span>Cargando reseñas…</div>'
@@ -226,8 +208,6 @@
       </div>
     </div>`
   }
-
-  // ── Editar ────────────────────────────────────────────────
   function openEdit(id, titulo, calificacion, contenido) {
     document.getElementById('edit-id').value           = id
     document.getElementById('edit-titulo').value       = titulo
@@ -255,8 +235,6 @@
       loadReviews()
     } catch (e) { toast(e.message, 'error') }
   }
-
-  // ── Eliminar ──────────────────────────────────────────────
   async function deleteReview(id) {
     if (!confirm('¿Eliminar esta reseña?')) return
     try {
@@ -269,8 +247,6 @@
       loadReviews()
     } catch (e) { toast(e.message, 'error') }
   }
-
-  // ── Init ──────────────────────────────────────────────────
   loadSession()
   renderNavbar()
   loadReviews()
